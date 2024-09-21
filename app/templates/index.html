@@ -7,14 +7,24 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Healthcare Location Finder</h1>
-    <form id="search-form">
-        <label for="condition">Enter your health condition:</label>
-        <input type="text" id="condition" name="condition" required>
-        <button type="submit">Search</button>
-    </form>
+    <div id="auth">
+        <!-- Okta Login/Logout -->
+        <button id="login-btn" style="display: none;">Login</button>
+        <button id="logout-btn" style="display: none;">Logout</button>
+    </div>
 
-    <div id="results"></div>
+    <!-- Content that will be shown when logged in -->
+    <div id="main-content" style="display: none;">
+        <h1>Welcome to the Healthcare Location Finder</h1>
+
+        <form id="search-form">
+            <label for="condition">Enter your health condition:</label>
+            <input type="text" id="condition" name="condition" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
 
     <script src="/static/script.js"></script>
 </body>
