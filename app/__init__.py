@@ -1,13 +1,27 @@
 from flask import Flask
 from flask_pymongo import PyMongo
+from authlib.integrations.flask_client import OAuth
+from config import Config
 
-app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"  # Replace with your MongoDB URI
-mongo = PyMongo(app)
+# Initialize PyMongo
+mongo = PyMongo()
 
-from app.routes import main
-app.register_blueprint(main)
+# Initialize OAuth (must be initialized globally)
+oauth = OAuth()
 
 def create_app():
-    return app
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
+    # Initialize MongoDB with the app if the MONGO_URI is set
+    if app.config.get("MONGO_URI"):
+        mongo.init_app(app)
+
+    # Initialize OAuth with the Flask app
+    oauth.init_app(app)  # <-- Make sure OAuth is initialized here
+
+    # Import routes
+    from app.routes import main
+    app.register_blueprint(main)
+
+    return app

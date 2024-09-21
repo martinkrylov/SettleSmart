@@ -1,3 +1,36 @@
+// Function to check if the user is authenticated
+function checkAuthStatus() {
+    fetch('/check-auth')
+    .then(response => response.json())
+    .then(data => {
+        if (data.is_authenticated) {
+            // User is logged in, show main content and logout button
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'block';
+            document.getElementById('login-btn').style.display = 'none';
+        } else {
+            // User is not logged in, show login button and hide main content
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('login-btn').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'none';
+        }
+    })
+    .catch(error => console.error('Error checking auth status:', error));
+}
+
+// Handle login
+document.getElementById('login-btn').addEventListener('click', function() {
+    // Redirect to Flask login route
+    window.location.href = '/login';
+});
+
+// Handle logout
+document.getElementById('logout-btn').addEventListener('click', function() {
+    // Redirect to Flask logout route
+    window.location.href = '/logout';
+});
+
+// Handle form submission
 document.getElementById('search-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
@@ -20,3 +53,6 @@ document.getElementById('search-form').addEventListener('submit', function(event
     })
     .catch(error => console.error('Error:', error));
 });
+
+// Check authentication status on page load
+checkAuthStatus();

@@ -1,6 +1,13 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///app.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')  # Ensure there's a default value
+    OKTA_CLIENT_ID = os.getenv('OKTA_CLIENT_ID')
+    OKTA_CLIENT_SECRET = os.getenv('OKTA_CLIENT_SECRET')
+    OKTA_ISSUER_URL = os.getenv('OKTA_ISSUER_URL')
+    
+    # MongoDB URI: Only set if available in the environment
+    MONGO_URI = os.getenv('MONGO_URI', None)  # Default to None if MONGO_URI is not set
+
