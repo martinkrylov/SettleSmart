@@ -1,71 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYiqnrYqKLYId_SJGv1lIy_vQClNnSzQ"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Location Finder</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center align-items-center min-vh-100">
-            <div class="col-md-8 text-center">
-                <h1 class="mt-5">Healthcare Location Finder</h1>
-
-                <!-- Login button -->
-                <button id="login-btn" class="btn btn-primary" style="display:none;">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-
-                <!-- Logout button -->
-                <button id="logout-btn" class="btn btn-danger" style="display:none;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-
-                <!-- Main content -->
-                <div id="main-content" style="display: none;">
-                    <form id="user-form">
-                        <div class="form-group">
-                            <label for="condition-select">Select health conditions:</label>
-                            <select id="condition-select" class="form-control" multiple>
-                                <option value="Asthma">Asthma</option>
-                                <option value="Diabetes">Diabetes</option>
-                                <option value="Hypertension">Hypertension</option>
-                                <option value="Allergies">Allergies</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="allergies">Enter allergies (comma-separated):</label>
-                            <input type="text" class="form-control" id="allergies" name="allergies">
-                        </div>
-                        <div class="form-group">
-                            <label for="financial">Financial standing (USD):</label>
-                            <input type="number" class="form-control" id="financial" name="financial" required>
-                        </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </form>
-
-                    <!-- Display Selected Conditions -->
-                    <div id="selected-conditions" class="mt-4">
-                        <h4>Selected Conditions:</h4>
-                        <ul id="conditions-list"></ul>
-                    </div>
-
-                    <!-- Map -->
-                    <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
-
-                    <div id="results" class="mt-4"></div>
-                </div>
-            </div>
-        </div>
+    <div id="auth">
+        <!-- Okta Login/Logout -->
+        <button id="login-btn" style="display: none;">Login</button>
+        <button id="logout-btn" style="display: none;">Logout</button>
     </div>
+
+    <!-- Content that will be shown when logged in -->
+    <div id="main-content" style="display: none;">
+        <h1>Welcome to the Healthcare Location Finder</h1>
+
+        <form id="search-form">
+            <label for="condition">Enter your health condition:</label>
+            <input type="text" id="condition" name="condition" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="results"></div>
+    </div>
+
     <script src="/static/script.js"></script>
 </body>
 </html>
