@@ -1,7 +1,7 @@
-/* Use Google Fonts */
+/* General page styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
+    background-color: lightblue;
     color: #343a40;
 }
 
@@ -10,11 +10,7 @@ h1 {
     font-weight: 600;
 }
 
-#login-btn, #logout-btn {
-    display: inline-block;
-    visibility: visible;
-}
-
+/* Button styles */
 button {
     transition: all 0.3s ease;
     cursor: pointer;
@@ -25,14 +21,7 @@ button:hover {
     opacity: 0.9;
 }
 
-#main-content {
-    margin-top: 20px;
-}
-
-#map {
-    margin-top: 20px;
-}
-
+/* Styling for the container */
 .container {
     display: flex;
     justify-content: center;
@@ -40,14 +29,69 @@ button:hover {
     min-height: 100vh; /* Full screen height */
 }
 
-#conditions-list {
-    list-style-type: none;
+/* Chips styling */
+ul {
+    list-style: none; /* Remove default bullets */
     padding-left: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow chips to wrap to the next line */
+    justify-content: center; /* Center the chips */
 }
 
-#conditions-list li {
-    background-color: #f0f0f0;
-    padding: 5px;
-    margin-bottom: 5px;
+/* General chip style */
+ul li {
+    display: inline-block;
+    background-color: #007bff; /* Default chip color */
+    color: white;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    position: relative;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Health condition chip style */
+ul#conditions-list li {
+    background-color: #28a745; /* Green color for health conditions */
+}
+
+/* Allergy chip style */
+ul#allergies-list li {
+    background-color: #dc3545; /* Red color for allergies */
+}
+
+/* Remove button inside chip */
+.remove-chip {
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 10px; /* This adds space between the word and the 'x' */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    position: relative; /* Removed 'absolute' positioning for more natural alignment */
+}
+
+/* Hover effect for chips */
+ul li:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+    transition: all 0.3s ease; /* Smooth transition */
+    background-color: #0069d9; /* Slight color change */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Deepen shadow */
+}
+
+/* Styling for the condition/allergy suggestions */
+.suggestion-item {
+    background-color: #e9ecef;
+    padding: 8px;
+    margin: 2px;
+    cursor: pointer;
     border-radius: 3px;
+}
+
+.suggestion-item:hover {
+    background-color: #ced4da;
 }

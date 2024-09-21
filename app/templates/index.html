@@ -4,6 +4,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css"> <!-- Ensure this path is correct -->
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
@@ -11,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYiqnrYqKLYId_SJGv1lIy_vQClNnSzQ"></script>
 </head>
 <body>
     <div class="container">
@@ -31,20 +34,31 @@
 
                 <!-- Main content -->
                 <div id="main-content" style="display: none;">
-                    <form id="user-form">
-                        <div class="form-group">
-                            <label for="condition-select">Select health conditions:</label>
-                            <select id="condition-select" class="form-control" multiple>
-                                <option value="Asthma">Asthma</option>
-                                <option value="Diabetes">Diabetes</option>
-                                <option value="Hypertension">Hypertension</option>
-                                <option value="Allergies">Allergies</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="allergies">Enter allergies (comma-separated):</label>
-                            <input type="text" class="form-control" id="allergies" name="allergies">
-                        </div>
+                  
+
+                    <div class="form-group">
+                      <label for="condition-input">Enter health conditions:</label>
+                      <input type="text" class="form-control" id="condition-input" placeholder="Type a health condition">
+                      <div id="condition-suggestions" class="mt-2"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="allergies-input">Enter allergies:</label>
+                        <input type="text" class="form-control" id="allergies-input" placeholder="Type an allergy">
+                        <div id="allergy-suggestions" class="mt-2"></div>
+                    </div>
+
+                    <!-- Display Selected Conditions -->
+                    <div id="selected-conditions" class="mt-4">
+                        <h4>Selected Conditions:</h4>
+                        <ul id="conditions-list"></ul>
+                    </div>
+                  
+                    <!-- Display Selected Allergies -->
+                      <div id="selected-allergies" class="mt-4">
+                        <h4>Selected Allergies:</h4>
+                        <ul id="allergies-list"></ul>
+                      </div>
                         <div class="form-group">
                             <label for="financial">Financial standing (USD):</label>
                             <input type="number" class="form-control" id="financial" name="financial" required>
