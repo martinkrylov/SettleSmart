@@ -1,33 +1,41 @@
+/* Use Google Fonts */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
 }
 
-h1 {
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-input {
-    padding: 10px;
-    font-size: 16px;
-    margin-right: 10px;
+#login-btn, #logout-btn {
+    display: inline-block;
+    visibility: visible;
+    font-size: 1.5rem; /* Larger font for login/logout buttons */
+    padding: 10px 20px;
 }
 
 button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
+    opacity: 0.9;
 }
+
+#main-content {
+    margin-top: 20px;
+}
+
+#map {
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full screen height */
+}
+
+#conditions-list, #allergy-list {
+    list-style-type
