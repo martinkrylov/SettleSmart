@@ -12,3 +12,5 @@ dependencies:
   - pip:
     - requests
     - flask
+    - flask_pymongo
+    - load_dotenv
