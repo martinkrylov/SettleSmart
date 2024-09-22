@@ -29,44 +29,19 @@ document.getElementById('logout-btn')?.addEventListener('click', function() {
 });
 
 // Health conditions and allergies data
-const healthConditions = medical_conditions = [
-    "Lung cancer",
-    "Breast cancer",
-    "Prostate cancer",
-    "Colorectal cancer",
-    "Bladder cancer",
-    "Non-Hodgkin lymphoma",
-    "Melanoma",
-    "Kidney cancer",
-    "Endometrial cancer",
-    "Leukemia",
-    "Pancreatic cancer",
-    "Liver cancer",
-    "Thyroid cancer",
-    "Oral cancer",
-    "Ovarian cancer",
-    "Testicular cancer",
-    "Hypertension",
-    "Diabetes",
-    "Chronic Obstructive Pulmonary Disease",
-    "Asthma",
-    "Chronic kidney disease",
-    "Alzheimer’s disease",
-    "Arthritis",
-    "Heart disease",
-    "Multiple sclerosis",
-    "Parkinson’s disease",
-    "HIV/AIDS",
-    "Lupus",
-    "Cystic fibrosis",
-    "Irritable Bowel Syndrome",
-    "Inflammatory Bowel Disease",
-    "Fibromyalgia",
-    "Chronic fatigue syndrome",
-    "Psoriasis",
-    "Sickle cell disease"
-]; // Add more conditions
-const allergiesList = ["Pollen", "Peanuts", "Dust", "Gluten", "Lactose", "Pet dander"]; // Add more allergies
+const healthConditions = [
+    "Lung cancer", "Breast cancer", "Prostate cancer", "Colorectal cancer",
+    "Bladder cancer", "Non-Hodgkin lymphoma", "Melanoma", "Kidney cancer",
+    "Endometrial cancer", "Leukemia", "Pancreatic cancer", "Liver cancer",
+    "Thyroid cancer", "Oral cancer", "Ovarian cancer", "Testicular cancer",
+    "Hypertension", "Diabetes", "Chronic Obstructive Pulmonary Disease",
+    "Asthma", "Chronic kidney disease", "Alzheimer’s disease", "Arthritis",
+    "Heart disease", "Multiple sclerosis", "Parkinson’s disease", "HIV/AIDS",
+    "Lupus", "Cystic fibrosis", "Irritable Bowel Syndrome", "Inflammatory Bowel Disease",
+    "Fibromyalgia", "Chronic fatigue syndrome", "Psoriasis", "Sickle cell disease"
+]; // Add more conditions if needed
+
+const allergiesList = ["Pollen", "Peanuts", "Dust", "Gluten", "Lactose", "Pet dander"];
 
 // Function to filter suggestions based on input
 function filterSuggestions(input, list) {
@@ -138,15 +113,14 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     const selectedConditions = Array.from(document.getElementById('conditions-list').getElementsByTagName('li')).map(li => li.textContent.replace('x', ''));
     const selectedAllergies = Array.from(document.getElementById('allergies-list').getElementsByTagName('li')).map(li => li.textContent.replace('x', ''));
 
-    // Ensure the Auth0 User ID is included (from the script injected in the HTML)
     const userData = {
         financial,
         conditions: selectedConditions,
         allergies: selectedAllergies,
-        auth0_user_id: auth0UserId  // Use the dynamically injected Auth0 User ID
+        auth0_user_id: auth0UserId  // Include Auth0 user ID
     };
 
-    console.log("Submitting user data:", userData);  // Log the data before sending
+    console.log("Submitting user data:", userData);  // Debugging
 
     // Send POST request to the backend
     fetch('/add_or_update_user', {
@@ -158,15 +132,25 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        // Display results dynamically
-        document.getElementById('results').innerHTML = `
-            <p>Conditions: ${selectedConditions.join(', ')}</p>
-            <p>Allergies: ${selectedAllergies.join(', ')}</p>
-            <p>Financial Standing: $${financial}</p>
-        `;
+        console.log("Response Data:", data);  // Debugging
+
+        // Display recommended cities if available
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = ''; // Clear any previous results
+
+        if (data['Recommended Cities'] && data['Recommended Cities'].length > 0) {
+            data['Recommended Cities'].forEach(city => {
+                console.log(`Recommended City: ${city.city}, ${city.state_name}`);  // Log the recommended city
+
+                const cityDiv = document.createElement('div');
+                cityDiv.textContent = `${city.city}, ${city.state_name} (Lat: ${city.lat}, Lng: ${city.lng})`;
+                resultsDiv.appendChild(cityDiv);
+            });
+        } else {
+            resultsDiv.textContent = 'No recommended cities found.';
+        }
     })
-    .catch(error => console.error('Error submitting form:', error));
+    .catch(error => console.error('Error fetching recommended cities:', error));
 });
 
 // Initialize Google Maps

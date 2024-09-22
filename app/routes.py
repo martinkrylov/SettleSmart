@@ -6,13 +6,25 @@ from functools import wraps
 from urllib.parse import urlencode
 import uuid
 
-from services.recommender import Recommender
+from app.services.recommender import Recommender
+import math
+import json
+
+def sanitize_data(data):
+    if isinstance(data, dict):
+        return {k: sanitize_data(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [sanitize_data(v) for v in data]
+    elif data is None or (isinstance(data, float) and math.isnan(data)):
+        return None  # Replace NaN or None with null (JSON compatible)
+    else:
+        return data
+
+
+
 
 import logging
 from auth0.management import Auth0
-
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
 
 # Initialize blueprint
 main = Blueprint('main', __name__)
@@ -124,6 +136,25 @@ def add_or_update_user():
         allergies = data.get('allergies')
         auth0_user_id = data.get('auth0_user_id')
 
+        print("INPUT", type(conditions), conditions)
+
+        rec = Recommender()
+        user_recommendations = rec.get_recommendations(data)[:10]
+        
+        # Convert ObjectId to string in recommendations
+        #user_recommendations = [
+        #{"name": "Austin", "state_name": "Texas", "lat": 30.2672, "lng": -97.7431},
+        #{"name": "Houston", "state_name": "Texas", "lat": 29.7604, "lng": -95.3698},
+        # Add more cities as needed
+#    ]
+        print("PAST")
+
+        user_recommendations = [
+            sanitize_data(user_rec.to_json()) for user_rec in user_recommendations
+        ]
+
+        print(user_recommendations)
+
         # Log the values individually for more clarity
         logging.debug(f"Financial: {financial}, Auth0 User ID: {auth0_user_id}")
 
@@ -144,7 +175,7 @@ def add_or_update_user():
         try:
             auth0_mgmt.users.update(auth0_user_id, {'user_metadata': user_metadata})
             logging.info(f"User metadata updated successfully in Auth0 for user ID: {auth0_user_id}")
-            return jsonify({"message": f"User data updated in Auth0 successfully!"}), 200
+            return jsonify({"Recommended Cities": user_recommendations}), 200
 
         except Exception as e:
             logging.error(f"Error updating Auth0: {str(e)}")
@@ -152,9 +183,8 @@ def add_or_update_user():
 
     except Exception as e:
         logging.error(f"Unexpected error: {str(e)}")
-        return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500
+        return jsonify({"error": f"Unexpected server error: {str(e)}"}), 500# Route to remove a user by name
 
-# Route to remove a user by name
 @main.route('/remove_user', methods=['DELETE'])
 def remove_user():
     data = request.json  # Get JSON data from the request
