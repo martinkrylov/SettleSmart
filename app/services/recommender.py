@@ -79,6 +79,7 @@ class Recommender:
                 continue
             results.append(LocationRecommendations(city_data, prev_locations[location]))
 
+        results.sort(key=lambda x: len(x.doctors), reverse=True)
         return results
 
         
