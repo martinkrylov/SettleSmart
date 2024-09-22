@@ -5,6 +5,9 @@ from config import Config
 from functools import wraps
 from urllib.parse import urlencode
 import uuid
+
+from services.recommender import Recommender
+
 # Initialize blueprint
 main = Blueprint('main', __name__)
 
@@ -120,4 +123,14 @@ def check_auth():
 def get_users():
     users = User.objects()
     return jsonify(users)
+
+@main.route('/get_recommendations', methods=['GET'])
+@login_required
+def get_recommendations():
+    user = session.get('user')
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    recommender = Recommender()
+
 
