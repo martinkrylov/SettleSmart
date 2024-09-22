@@ -83,15 +83,29 @@ ul li:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Deepen shadow */
 }
 
-/* Styling for the condition/allergy suggestions */
-.suggestion-item {
-    background-color: #e9ecef;
-    padding: 8px;
-    margin: 2px;
-    cursor: pointer;
-    border-radius: 3px;
+/* Suggestions box styling */
+.suggestions-box {
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: rgba(245, 245, 245, 0.95);  /* Very light gray with slight transparency */
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none;  /* Hidden until input is typed */
+    position: relative;  /* Will take up space when displayed */
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;  /* Rounded corners */
 }
 
+/* Style each suggestion item */
+.suggestion-item {
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+/* Highlight suggestion on hover */
 .suggestion-item:hover {
-    background-color: #ced4da;
+    background-color: rgba(220, 220, 220, 0.5);
 }

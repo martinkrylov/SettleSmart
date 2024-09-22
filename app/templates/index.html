@@ -13,8 +13,8 @@
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYiqnrYqKLYId_SJGv1lIy_vQClNnSzQ"></script>
+    <!-- Dynamically load Google Maps API key from backend -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}"></script>
 </head>
 <body>
     <div class="container">
@@ -34,43 +34,42 @@
 
                 <!-- Main content -->
                 <div id="main-content" style="display: none;">
-                  
 
-                    <div class="form-group">
-                      <label for="condition-input">Enter health conditions:</label>
-                      <input type="text" class="form-control" id="condition-input" placeholder="Type a health condition">
-                      <div id="condition-suggestions" class="mt-2"></div>
-                    </div>
+                    <!-- Form for health conditions and allergies -->
+                    <form id="user-form">
+                        <div class="form-group">
+                            <label for="condition-input">Enter health conditions:</label>
+                            <input type="text" class="form-control" id="condition-input" placeholder="Type a health condition">
+                            <div id="condition-suggestions" class="suggestions-box mt-2"></div>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="allergies-input">Enter allergies:</label>
-                        <input type="text" class="form-control" id="allergies-input" placeholder="Type an allergy">
-                        <div id="allergy-suggestions" class="mt-2"></div>
-                    </div>
+                        <div class="form-group">
+                            <label for="allergies-input">Enter allergies:</label>
+                            <input type="text" class="form-control" id="allergies-input" placeholder="Type an allergy">
+                            <div id="allergy-suggestions" class="suggestions-box mt-2"></div>
+                        </div>
 
-                    <!-- Display Selected Conditions -->
-                    <div id="selected-conditions" class="mt-4">
-                        <h4>Selected Conditions:</h4>
-                        <ul id="conditions-list"></ul>
-                    </div>
-                  
-                    <!-- Display Selected Allergies -->
-                      <div id="selected-allergies" class="mt-4">
-                        <h4>Selected Allergies:</h4>
-                        <ul id="allergies-list"></ul>
-                      </div>
+                        <!-- Display Selected Conditions -->
+                        <div id="selected-conditions" class="mt-4">
+                            <h4>Selected Conditions:</h4>
+                            <ul id="conditions-list"></ul>
+                        </div>
+
+                        <!-- Display Selected Allergies -->
+                        <div id="selected-allergies" class="mt-4">
+                            <h4>Selected Allergies:</h4>
+                            <ul id="allergies-list"></ul>
+                        </div>
+
+                        <!-- Financial Standing Input -->
                         <div class="form-group">
                             <label for="financial">Financial standing (USD):</label>
                             <input type="number" class="form-control" id="financial" name="financial" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </form>
 
-                    <!-- Display Selected Conditions -->
-                    <div id="selected-conditions" class="mt-4">
-                        <h4>Selected Conditions:</h4>
-                        <ul id="conditions-list"></ul>
-                    </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success" id="submit-btn">Submit</button>
+                    </form>
 
                     <!-- Map -->
                     <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
@@ -80,6 +79,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Inject the Auth0 User ID into a JavaScript variable from the Flask session
+        const auth0UserId = "{{ session.get('auth0_user_id') }}";  // This will contain the actual user ID from the session
+    
+        // Debugging: Log the Auth0 User ID in the console to verify it's available
+        console.log("Auth0 User ID:", auth0UserId);
+    </script>
+
+    <!-- External JavaScript -->
+    
     <script src="/static/script.js"></script>
 </body>
 </html>
